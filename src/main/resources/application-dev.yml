@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  context-path: ""
+
+# 开启调试模式，打印sql
+logging:
+  level:
+    com:
+      monda:
+        demo:
+          mapper: DEBUG
+
+spring:
+  datasource:
+    url: jdbc:mysql://172.28.1.3:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: monda43%-346ujNyu7deJ
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: true
+      stat-view-servlet:
+        allow: true
+
+
+
+
+

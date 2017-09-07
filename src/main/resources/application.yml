@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: dev
+
+    #模板引擎配置
+    thymeleaf:
+      cache: false
+      check-template-location: true
+      content-type: text/html
+      enabled: true
+      encoding: utf-8
+      mode: HTML5
+      prefix: classpath:/templates/
+      suffix: .html
+
+#mybatis 配置
+mybatis:
+  type-aliases-package: com.znkj.ticket.model
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+mapper:
+  mappers: com.monda.demo.util.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
+
+
+

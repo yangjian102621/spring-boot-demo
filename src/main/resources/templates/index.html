@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <title>Hello world</title>
+    <link href="/static/common/js/layer/skin/default/layer.css"/>
+
+    <body>
+        <h1 th:text="${title}">Hello Word.</h1>
+
+        <form action="/upload" method="post" id="upload_form" enctype="multipart/form-data">
+            <input type="file" id="file" name="file" />
+            <input type="button" value="upload" id="upload_btn"/>
+        </form>
+    </body>
+
+    <script src="/static/common/js/jquery.min.js"></script>
+    <script src="/static/common/js/layer/layer.js"></script>
+    <script src="/static/common/js/ajaxfileupload.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#upload_btn').on('click', function () {
+                $.ajaxFileUpload
+                (
+                    {
+                        url: '/upload', //用于文件上传的服务器端请求地址
+                        secureuri: false, //是否需要安全协议，一般设置为false
+                        fileElementId: 'file', //文件上传域的ID
+                        dataType: 'json', //返回值类型 一般设置为json
+                        success: function (data)  //服务器成功响应处理函数
+                        {
+                            layer.msg(data.item)
+                        },
+                        error: function (data)//服务器响应失败处理函数
+                        {
+                            layer.msg("fail")
+                        }
+                    }
+                )
+            })
+        })
+    </script>
+</html>
