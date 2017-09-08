@@ -29,6 +29,7 @@
             "areaData" : "common/js/jarea/JAreaData.js",
             "datepicker" : "common/js/datepicker/amazeui.datetimepicker.min.js",
             "chosen" : "common/js/chosen/amazeui.chosen.min.js",
+            "jpreview" : "common/js/jpreview.js",
 
             "common" : "{app}/common.js",
             "index" : "{app}/index.js",

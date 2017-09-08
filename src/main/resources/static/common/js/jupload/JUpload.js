@@ -106,6 +106,10 @@
 		});
 		if (options.method == "html5") {
 			$input.on("change",  function () {
+				if ($input.val() == "") {
+					__error__("请选择文件.");
+					return false;
+				}
 				if ( options.maxFileNum > 0 && hasUoloaded >= options.maxFileNum ) {
 					__error__("您最多允许上传"+options.maxFileNum+"张图片。");
 					return false;
@@ -148,7 +152,7 @@
 						$input.val("");
 
 					} else {
-						alert(data.message);
+						__error__("上传失败,"+data.message);
 					}
 					options.onComplete();
 
@@ -169,7 +173,7 @@
 		function addImage(src) {
 			var builder = new StringBuilder();
 			builder.append('<div class="img-wrapper"><div class="img-container" style="width: '+options.twidth+'px; height: '+options.theight+'px">');
-			builder.append('<img src="'+src+'">');
+			builder.append('<img src="'+src+'" data-src="'+src+'">');
 			builder.append('<div class="file-opt-box clearfix"><span class="remove">删除</span></div></div></div>');
 			var $image = $(builder.toString());
 			$("#"+options.image_container).append($image);
@@ -213,7 +217,7 @@
 					hasUoloaded++;
 					options.onSuccess(data.item);
 				} else {
-					__error__("上传失败");
+					__error__("上传失败,"+data.message);
 					options.onError();
 				}
 

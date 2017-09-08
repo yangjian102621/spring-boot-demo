@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yangjian on 17-9-7.
@@ -38,6 +40,10 @@ public class IndexController {
 	@GetMapping(value = "/admin/index")
 	public String adminIndex(HttpServletRequest request, ModelMap modelMap) {
 		modelMap.put("title", "数据添加 Demo 页面");
+		List<String> imgUrls = new ArrayList<>();
+		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FvRZZBU4dE1e1ek_cOfpt3wUFgrw");
+		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FmSl1Nw9ylrC0-_Ij1MUIqo5Zmd-");
+		modelMap.put("imgUrls", imgUrls);
 		return "admin/index";
 	}
 

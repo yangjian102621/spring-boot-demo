@@ -38,7 +38,7 @@ public class UploadController {
 			resultVo.setMessage("上传成功.");
 		} else {
 			resultVo.setCode(ResultEnum.FAIL.getCode());
-			resultVo.setMessage("上传失败.");
+			resultVo.setMessage(uploadFile.getMessage());
 		}
 		return resultVo;
 	}

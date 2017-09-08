@@ -41,7 +41,10 @@ qiniu:
   # 外链默认域名
   domain: http://ovsekfapp.bkt.clouddn.com
   # 上传最大尺寸 2M
-  max-size: 2097152
+  maxFileSize: 2
+  #允许上传的图片后缀
+  allowImgExts: jpg|jpeg|png|gif
+
 
 
 

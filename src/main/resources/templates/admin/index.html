@@ -168,9 +168,9 @@
 <th:block th:replace="admin/include :: resource-footer"></th:block>
 <script src="/static/common/js/vue.js"></script>
 <script src="/static/common/js/jupload/JUpload.js"></script>
-<script>
+<script th:inline="javascript">
     seajs.use("index", function (exports) {
-        exports.upload();
+        exports.upload(/*[[${imgUrls}]]*/);
     });
     
 </script>

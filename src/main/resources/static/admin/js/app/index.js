@@ -7,6 +7,7 @@ define(function(require, exports) {
 
     var common = require("common");
 	require("chosen");
+	require("jpreview");
     common.initForm("#cAdd", {
 	    validate: function(validity) {
 		    // if (validity.field.id == 'pic') {
@@ -29,15 +30,13 @@ define(function(require, exports) {
 
 	exports.upload = function (data) {
 
-		if (data != undefined) {
-			data = [data]
-		}
 		var loader;
 
 		$("#upload-btn").JUpload({
 			url : "/upload/qiniu",
 			src : "file",
-			maxFileNum : 1,
+			maxFileNum : 5,
+			extAllow : "jpg|png|gif|jpeg",
 			datas : data,
 			maxFileSize : 2,
 			image_container:"image-box",
@@ -61,6 +60,8 @@ define(function(require, exports) {
 				$('#cover').val("");
 			}, //删除一张图片回调
 		});
+
+		$(".img-wrapper img").jpreview();
 	}
 
     var vm = new Vue({
