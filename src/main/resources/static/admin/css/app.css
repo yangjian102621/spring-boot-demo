@@ -1260,7 +1260,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
 .theme-black .tpl-model-dialog {
   background: #424b4f;
 }
-.theme-black .tpl-error-title {
+.tpl-error-title {
   font-size: 210px;
   line-height: 220px;
   color: #868E8E;

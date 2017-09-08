@@ -21,16 +21,18 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
 
     @Override
     public AdminUser login(String username) {
-        AdminUser bean = new AdminUser();
-        bean.setUsername(username);
-        return getUserAndRoles(bean);
+        AdminUser query = new AdminUser();
+        query.setUsername(username);
+        return getUserAndRoles(query);
     }
 
     @Override
     public AdminUser getUserAndRoles(AdminUser user) {
         AdminUser admin = this.getItem(user);
         //获取用户角色
-        admin.setRoleList(roleService.getItemsByIds(admin.getRoleIdsList()));
+        if (null != admin) {
+            admin.setRoleList(roleService.getItemsByIds(admin.getRoleIdsList()));
+        }
         return admin;
     }
 

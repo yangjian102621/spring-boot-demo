@@ -217,8 +217,6 @@
 					options.onError();
 				}
 
-				options.onSuccess(e);
-
 			}, false);
 
 			// file upload complete

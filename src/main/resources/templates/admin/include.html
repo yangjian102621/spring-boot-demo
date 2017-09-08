@@ -3,7 +3,7 @@
 
 <body>
 <!-- header styles and scripts -->
-<div th:fragment="resource-header">
+<head th:fragment="resource-header">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title th:text="${title}">Amaze UI Admin index Examples</title>
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="renderer" content="webkit" />
     
-    <link rel="icon" type="image/png" href="/static/admin/i/app-icon72x72@2x.png" />
+    <link rel="icon" type="image/png" href="/static/admin/i/favicon.png" />
     <link rel="apple-touch-icon-precomposed" href="/static/admin/i/app-icon72x72@2x.png" />
     <link rel="stylesheet" href="/static/admin/css/amazeui.min.css" />
     <link rel="stylesheet" href="/static/common/js/datepicker/amazeui.datetimepicker.min.css" />
@@ -24,7 +24,7 @@
     <script src="/static/common/js/sea.min.js"></script>
     <script src="/static/admin/js/admin-config.js"></script>
     
-</div>
+</head>
 
 <div th:fragment="resource-footer">
     <script src="/static/admin/js/theme.js"></script>

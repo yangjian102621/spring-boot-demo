@@ -16,6 +16,11 @@ public class AppException extends RuntimeException {
         this.code = resultEnum.getCode();
     }
 
+    public AppException(String message) {
+        super(message);
+        this.code = ResultEnum.FAIL.getCode();
+    }
+
     public String getCode() {
         return code;
     }

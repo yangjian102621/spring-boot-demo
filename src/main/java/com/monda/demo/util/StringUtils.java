@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author yangjian
  * @since 2017/8/1.
  */
-public class StringUtil {
+public class StringUtils {
 
     public static String getMd5Code(String str) {
         try {

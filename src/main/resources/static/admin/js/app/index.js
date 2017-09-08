@@ -6,79 +6,62 @@
 define(function(require, exports) {
 
     var common = require("common");
-    var AjaxProxy = require("AjaxProxy");
+	require("chosen");
+    common.initForm("#cAdd", {
+	    validate: function(validity) {
+		    // if (validity.field.id == 'pic') {
+		    //     alert("fuck");
+			 //    // var date = validity.field.value;
+			 //    // var date1 = $('#startdate').val();
+			 //    // if (date1 > date) {
+				//  //    validity.valid = false;
+			 //    // }
+		    // }
 
-    $("#cAdd").validator({
-
-        validate: function(validity) {
-
-            // Ajax 验证
-            if ($(validity.field).is('.js-ajax-validate')) {
-                // 异步操作必须返回 Deferred 对象
-                return $.ajax({
-                    url: $(validity.field).data("url"),
-                    cache: false,
-                    dataType: 'json'
-                }).then(function(data) {
-                    console.log(data);
-                    if (data.code != "000") {
-                        validity.valid = false;
-                    } else {
-                        validity.valid = true;
-                    }
-                    return validity;
-                }, function() {
-                    validity.valid = false;
-                    return validity;
-                });
-            }
-
-        },
-
-        onValid: function(validity) {
-            $(validity.field).closest('.am-form-group').find('.am-alert').hide();
-        },
-
-        onInValid: function(validity) {
-            var $field = $(validity.field);
-            var $group = $field.closest('.am-form-group');
-            var $alert = $group.find('.am-alert');
-            // 使用自定义的提示信息 或 插件内置的提示信息
-            var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
-
-            if (!$alert.length) {
-                $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
-                appendTo($group);
-            }
-
-            $alert.html(msg).show();
-        },
-
-        /**
-         * form submit handler
-         * @returns {boolean}
-         */
-        submit : function () {
-
-            var formData = $("#cAdd").serialize();
-            console.log(formData);
-            return false;
-        }
+	    },
     });
 
-    /**
-     *  Ajax 代理调用插件
-     */
-    $(".ajaxproxy").AjaxProxy({
-        dataType : "json",
-        callBack : function (data) {
-            var skin = "red";
-            if ( data.code == "000" ) {
-                skin = "green";
-            }
-            layer.msg(data.message,{offset:common.global.layer.msg.offset, skin:"layui-layer-"+skin});
-        }
-    });
+	//初始化 chosen 控件
+	$('select[data-type="chosen"]').chosen({
+		no_results_text: '木有找到匹配的项！',
+		max_selected_options: 3
+	});
+
+	exports.upload = function (data) {
+
+		if (data != undefined) {
+			data = [data]
+		}
+		var loader;
+
+		$("#upload-btn").JUpload({
+			url : "/upload/qiniu",
+			src : "file",
+			maxFileNum : 1,
+			datas : data,
+			maxFileSize : 2,
+			image_container:"image-box",
+			messageHandler : function (message) {
+				JDialog.msg({type:"error", content:message, timer:3000});
+			},
+			onStart : function () {
+				loader = JDialog.msg({type:"loading", content:"正在上传文件,请稍后...", timer:0, lock:true});
+			},
+			onComplete : function () { //完成上传
+				loader.hide();
+			},
+			onError : function () {
+				loader.hide();
+			},
+			onSuccess : function(data) {
+				$('#cover').val(data);
+				JDialog.msg({type:"ok", content:"上传成功。", timer:2000});
+			},
+			onRemove : function(data) {
+				$('#cover').val("");
+			}, //删除一张图片回调
+		});
+	}
 
     var vm = new Vue({
         el: '#example',

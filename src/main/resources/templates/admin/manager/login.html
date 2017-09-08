@@ -15,7 +15,13 @@
     <link rel="stylesheet" href="/static/admin/css/amazeui.min.css" />
     <link rel="stylesheet" href="/static/admin/css/app.css" />
     <script src="/static/common/js/jquery.min.js"></script>
-
+    
+    <style>
+        body {
+            background: url("/static/admin/img/k.jpg") no-repeat center !important;
+            background-size: 100%;
+        }
+    </style>
 </head>
 
 <body class="theme-white">
@@ -77,6 +83,7 @@
             }
             
             $(this).button("loading");
+            var that = this;
             
             $.post("/admin/doLogin", {
                 "username" : username,
@@ -86,12 +93,12 @@
                 if (res.code == "000") {
 	                JDialog.msg({type:'ok', content:'登录成功.', offset:50});
                     setTimeout(function () {
-	                    location.href = "/admin/manager/index";
+	                    location.href = "/admin/index";
                     }, 1000);
                 } else {
 	                JDialog.msg({type:'error', content:res.message, offset:50});
                 }
-                $(this).button("reset");
+                $(that).button("reset");
             }, "json");
         });
     

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <div th:replace="admin/include :: resource-header">header goes here.</div>
-</head>
+<head th:replace="admin/include :: resource-header">header goes here.</head>
 
 <body>
 
@@ -70,9 +68,7 @@
                                         <td th:text="${item.lastLoginIp}">最后登录IP</td>
                                         <td>
                                             <div class="tpl-switch">
-                                                <input th:if="${item.enable == 1}" type="checkbox" data-type="switch" data-url="/admin/manager/enable" th:data-id="${item.id}" checked
-                                                       class="ios-switch tpl-switch-btn am-margin-top-xs">
-                                                <input th:if="${item.enable == 0}" type="checkbox" data-type="switch" data-url="/admin/manager/enable" th:data-id="${item.id}" class="ios-switch tpl-switch-btn am-margin-top-xs">
+                                                <input th:checked="${item.enable == 1}" type="checkbox" data-type="switch" data-url="/admin/manager/enable" th:data-id="${item.id}" class="ios-switch tpl-switch-btn am-margin-top-xs">
                                                 <div class="tpl-switch-btn-view"><div></div></div>
                                             </div>
                                         </td>

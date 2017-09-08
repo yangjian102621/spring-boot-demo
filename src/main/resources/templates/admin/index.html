@@ -21,163 +21,137 @@
                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title  am-cf">数据列表</div>
+                            <div class="widget-title  am-cf" th:text="${title}">数据添加</div>
                         </div>
                         <div class="widget-body  am-fr">
-                            
-                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                <div class="am-form-group">
-                                    <div class="am-btn-toolbar">
-                                        <div class="am-btn-group am-btn-group-xs">
-                                            <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
-                                            <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>
-                                            <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button>
-                                            <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+    
+                            <div class="am-u-sm-12">
+                                <form data-action="/admin/doAdd" class="am-form" id="cAdd" data-location="/admin/manager/index">
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">用户名：</label>
+                                        <input type="text" maxlength="20" name="username" placeholder="输入用户名 6-20"
+                                               class="js-ajax-validate" data-url="/admin/manager/exists/"
+                                               data-validation-message="用户名已经被注册,请更换." required>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">下拉选框（普通）：</label>
+                                        <select name="rids" placeholder="请选择角色，可多选">
+                                            <option value="1">超级管管理员</option>
+                                            <option value="2">超级管管理员1</option>
+                                            <option value="3">超级管管理员2</option>
+                                            <option value="3">超级管管理员3</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">select控件（单选）：</label>
+                                        <select name="rids" data-am-selected="{btnWidth:'100%'}" placeholder="请选择角色，单选">
+                                            <option value="1">超级管管理员</option>
+                                            <option value="2">超级管管理员1</option>
+                                            <option value="3">超级管管理员2</option>
+                                            <option value="3">超级管管理员3</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">select控件（多选）：</label>
+                                        <select name="rids" multiple data-am-selected="{btnWidth:'100%'}" placeholder="请选择角色，多选">
+                                            <option value="1">超级管管理员</option>
+                                            <option value="2">超级管管理员1</option>
+                                            <option value="3">超级管管理员2</option>
+                                            <option value="3">超级管管理员3</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">chosen控件（多选）：</label>
+                                        <select name="rids" multiple data-type="chosen" data-placeholder="请选择角色，多选，最多选3项">
+                                            <option value="1">超级管管理员</option>
+                                            <option value="2">超级管管理员1</option>
+                                            <option value="3">超级管管理员2</option>
+                                            <option value="3">超级管管理员3</option>
+                                        </select>
+                                    </div>
+            
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">密码：</label>
+                                        <input type="password" name="password" minlength="6" maxlength="20"
+                                               id="password" placeholder="请输入密码 6-20" required>
+                                    </div>
+            
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">确认密码：</label>
+                                        <input type="password" name="repass" minlength="6" maxlength="20"
+                                               placeholder="请确认密码"
+                                               data-equal-to="#password" data-validation-message="请输入跟上面一致的密码" required>
+                                    </div>
+            
+                                    <div class="am-form-group">
+                                        <label>单选：</label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" value="1" name="radio" data-type="icheck"> item_1
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" value="0" name="radio" data-type="icheck"> item_2
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" value="0" name="radio" data-type="icheck"> item_3
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" value="0" name="radio" data-type="icheck"> item_4
+                                        </label>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label>多选：</label>
+                                        <label class="am-checkbox-inline">
+                                            <input type="checkbox" value="1" name="cbox"data-type="icheck"> item_1
+                                        </label>
+                                        <label class="am-checkbox-inline">
+                                            <input type="checkbox" value="0" name="cbox" data-type="icheck"> item_2
+                                        </label>
+                                        <label class="am-checkbox-inline">
+                                            <input type="checkbox" value="0" name="cbox" data-type="icheck"> item_3
+                                        </label>
+                                        <label class="am-checkbox-inline">
+                                            <input type="checkbox" value="0" name="cbox" data-type="icheck"> item_4
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label>Switch 开关控件：</label>
+                                        <div class="tpl-switch">
+                                            <input type="checkbox" data-type="switch" class="ios-switch tpl-switch-btn am-margin-top-xs">
+                                            <div class="tpl-switch-btn-view"><div></div></div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
-                                <div class="am-form-group tpl-table-list-select">
-                                    <select data-am-selected="{btnSize: 'sm'}">
-                                        <option value="option1">所有类别</option>
-                                        <option value="option2">IT业界</option>
-                                        <option value="option3">数码产品</option>
-                                        <option value="option3">笔记本电脑</option>
-                                        <option value="option3">平板电脑</option>
-                                        <option value="option3">只能手机</option>
-                                        <option value="option3">超极本</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                    <input type="text" class="am-form-field " />
-                                    <span class="am-input-group-btn">
-                                        <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="am-u-sm-12">
-                                <table width="100%" class="am-table am-table-compact am-table-hover tpl-table-black am-table-bordered" id="example-r">
-                                    <thead>
-                                    <tr>
-                                        <th>文章标题</th>
-                                        <th>作者</th>
-                                        <th>时间</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="gradeX">
-                                        <td>Amaze UI 模式窗口</td>
-                                        <td>张鹏飞</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>有适配微信小程序的计划吗</td>
-                                        <td>天纵之人</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>请问有没有amazeui 分享插件</td>
-                                        <td>王宽师</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>关于input输入框的问题</td>
-                                        <td>着迷</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>有没有发现官网上的下载包不好用</td>
-                                        <td>醉里挑灯看键</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="even gradeC">
-                                        <td>我建议WEB版本文件引入问题</td>
-                                        <td>罢了</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- more data -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="am-u-lg-12 am-cf">
-                                
-                                <div class="am-fr">
-                                    <ul class="am-pagination tpl-pagination">
-                                        <li class="am-disabled"><a href="#">«</a></li>
-                                        <li class="am-active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">»</a></li>
-                                    </ul>
-                                </div>
+    
+                                    <div class="am-form-group">
+                                        <label>文本域：</label>
+                                        <div class="tpl-switch">
+                                            <input type="checkbox" data-type="switch" class="ios-switch tpl-switch-btn am-margin-top-xs">
+                                            <textarea rows="5"></textarea>
+                                        </div>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label class="am-form-label">图片上传</label>
+                                        <div class="am-form-group clearfix">
+                                            <div id="image-box"></div>
+                                            <span type="button" id="upload-btn" class="img-upload">
+                                                <i class="am-icon-plus am-icon-btn" title="添加图片"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="pic" id="pic" placeholder="请上传图片" class="not-display"
+                                               required>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <button type="submit" class="am-btn am-btn-primary">提交保存</button>
+                                    </div>
+        
+                                </form>
                             </div>
                             
                             <div class="am-u-lg-12">
@@ -192,9 +166,11 @@
     
 </div>
 <th:block th:replace="admin/include :: resource-footer"></th:block>
+<script src="/static/common/js/vue.js"></script>
+<script src="/static/common/js/jupload/JUpload.js"></script>
 <script>
-    seajs.use("common", function (exports) {
-        
+    seajs.use("index", function (exports) {
+        exports.upload();
     });
     
 </script>

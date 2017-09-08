@@ -76,7 +76,7 @@ public class LoginController {
 //            throw e.printStackTrace();;
             logger.error("验证失败");
             resultVo.setCode(ResultEnum.FAIL.getCode());
-            resultVo.setMessage("验证失败");
+            resultVo.setMessage("验证失败, 用户名或者密码错误");
         }
 
         //验证是否登录成功
@@ -111,17 +111,21 @@ public class LoginController {
     @GetMapping(value = "/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
         request.getSession().setAttribute(AdminUserService.LOGIN_SESSION_KEY, null);
         response.sendRedirect("/admin/login");
     }
 
     @GetMapping(value = "/403")
-    public String forbid(HttpServletRequest request) {
+    public String forbid(ModelMap modelMap) {
+        modelMap.put("title", "您没有操作权限");
         return "admin/403";
     }
 
     @GetMapping(value = "/404")
-    public String notFound(HttpServletRequest request) {
+    public String notFound(ModelMap modelMap) {
+        modelMap.put("title", "页面没有找到");
         return "admin/404";
     }
 

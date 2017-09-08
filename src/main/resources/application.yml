@@ -25,11 +25,23 @@ mapper:
   not-empty: false
   identity: MYSQL
 
+# 分页插件配置
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+# 七牛云相关配置
+qiniu:
+  accessKey: _-BMslq1mPL_zY0KN2iLD1-ym4TcHhQUi0_dDFPB
+  secretKey: J_As9ApfpyCpk31l3hOAZe3QQTc8iYlEfdd6-5an
+  # 选择存储器
+  bucket: test
+  # 外链默认域名
+  domain: http://ovsekfapp.bkt.clouddn.com
+  # 上传最大尺寸 2M
+  max-size: 2097152
 
 
 

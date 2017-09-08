@@ -186,6 +186,14 @@ public class ResultVo<T> {
     }
 
     /**
+     * 返回 ResultVo 实例
+     * @return
+     */
+    public static ResultVo instance() {
+        return new ResultVo();
+    }
+
+    /**
      * 正确值判断
      * @return
      */

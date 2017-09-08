@@ -7,7 +7,7 @@ import com.monda.demo.model.AdminUser;
 import com.monda.demo.service.AdminRoleService;
 import com.monda.demo.service.AdminUserService;
 import com.monda.demo.util.IPUtil;
-import com.monda.demo.util.StringUtil;
+import com.monda.demo.util.StringUtils;
 import com.monda.demo.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -77,8 +77,8 @@ public class AdminUserController extends BaseController<AdminUserService, AdminU
         adminUser.setUpdatetime(new Date());
         adminUser.setLastLoginTime(new Date());
         adminUser.setLastLoginIp(IPUtil.getIp(request));
-        adminUser.setSalt(StringUtil.getUUId());
-        adminUser.setPassword(StringUtil.getPasswordHash(adminUser.getPassword(), adminUser.getCredentialsSalt(), 2));
+        adminUser.setSalt(StringUtils.getUUId());
+        adminUser.setPassword(StringUtils.getPasswordHash(adminUser.getPassword(), adminUser.getCredentialsSalt(), 2));
         adminUser.setAdder((Integer) request.getAttribute("adminId"));
         adminUser.setEnable(1);
 
@@ -124,7 +124,7 @@ public class AdminUserController extends BaseController<AdminUserService, AdminU
         adminUser.setId(id);
         if (null != adminUser.getPassword()) {
             AdminUser oldUser = service.getItemById(id);
-            adminUser.setPassword(StringUtil.getPasswordHash(adminUser.getPassword(), oldUser.getCredentialsSalt(), 2));
+            adminUser.setPassword(StringUtils.getPasswordHash(adminUser.getPassword(), oldUser.getCredentialsSalt(), 2));
         }
         if (service.update(adminUser)) {
             return ResultVo.success();
@@ -222,11 +222,11 @@ public class AdminUserController extends BaseController<AdminUserService, AdminU
         String newPass = getStringParam(request, "newpassword");
         Object adminId = request.getAttribute("adminId");
         AdminUser adminUser = service.getItemById(adminId);
-        String password = StringUtil.getPasswordHash(oldPass, adminUser.getCredentialsSalt(), 2);
+        String password = StringUtils.getPasswordHash(oldPass, adminUser.getCredentialsSalt(), 2);
         if (!password.equals(adminUser.getPassword())) {
             return new ResultVo(ResultEnum.FAIL.getCode(), "原密码错误");
         }
-        adminUser.setPassword(StringUtil.getPasswordHash(newPass, adminUser.getCredentialsSalt(), 2));
+        adminUser.setPassword(StringUtils.getPasswordHash(newPass, adminUser.getCredentialsSalt(), 2));
         if (service.update(adminUser)) {
             return ResultVo.success();
         } else {
