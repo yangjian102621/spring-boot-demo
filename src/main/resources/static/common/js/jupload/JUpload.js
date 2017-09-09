@@ -117,6 +117,8 @@
 				options.onStart();
 				setTimeout(function () {
 					uploadFile($input[0].files[0]);
+					//清空input已选文件
+					$input.val("");
 				}, 200);
 			});
 		}
@@ -135,6 +137,8 @@
 				options.onStart();
 				setTimeout(function() {
 					$form[0].submit();
+					//清空input已选文件
+					$input.val("");
 				}, 200);
 			});
 			$iframe.on("load", function() {
@@ -148,8 +152,6 @@
 						}
 						hasUoloaded++;
 						options.onSuccess(data.item);
-						//清空input已选文件
-						$input.val("");
 
 					} else {
 						__error__("上传失败,"+data.message);

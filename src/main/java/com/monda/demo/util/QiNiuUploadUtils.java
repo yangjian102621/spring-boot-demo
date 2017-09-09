@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -109,7 +108,8 @@ public class QiNiuUploadUtils {
 	private void checkFileExtension(MultipartFile multipartFile, ResultVo resultVo) {
 
 		String extension = this.getFileExt(multipartFile.getOriginalFilename());
-		if (!allowImgExts.contains(extension)) {
+		List<String> extList = Arrays.asList(allowImgExts.split("\\|"));
+		if (!extList.contains(extension)) {
 			resultVo.setCode(ResultEnum.FAIL.getCode());
 			resultVo.setMessage("非法的文件后缀");
 		}
@@ -125,7 +125,7 @@ public class QiNiuUploadUtils {
 		if (pos == -1) {
 			return null;
 		} else {
-			return  filename.substring(pos+1);
+			return  filename.substring(pos+1).toLowerCase() ;
 		}
 	}
 
