@@ -42,7 +42,7 @@ public class IndexController {
 		modelMap.put("title", "数据添加 Demo 页面");
 		List<String> imgUrls = new ArrayList<>();
 		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FvRZZBU4dE1e1ek_cOfpt3wUFgrw");
-		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FmSl1Nw9ylrC0-_Ij1MUIqo5Zmd-");
+		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FhVdxPhVdVxCXmtLZRbBf5z2cN3X");
 		modelMap.put("imgUrls", imgUrls);
 		return "admin/index";
 	}
