@@ -130,7 +130,6 @@
                                     <div class="am-form-group">
                                         <label>文本域：</label>
                                         <div class="tpl-switch">
-                                            <input type="checkbox" data-type="switch" class="ios-switch tpl-switch-btn am-margin-top-xs">
                                             <textarea rows="5"></textarea>
                                         </div>
                                     </div>
@@ -145,6 +144,13 @@
                                         </div>
                                         <input type="text" name="pic" id="pic" placeholder="请上传图片" class="not-display"
                                                required>
+                                    </div>
+    
+                                    <div class="am-form-group">
+                                        <label>文本域：</label>
+                                        <div class="tpl-switch">
+                                            <textarea rows="5" name="content"></textarea>
+                                        </div>
                                     </div>
     
                                     <div class="am-form-group">
@@ -168,6 +174,7 @@
 <th:block th:replace="admin/include :: resource-footer"></th:block>
 <script src="/static/common/js/vue.js"></script>
 <script src="/static/common/js/jupload/JUpload.js"></script>
+<script src="/static/NKeditor/NKeditor-all-min.js"></script>
 <script th:inline="javascript">
     seajs.use("index", function (exports) {
         exports.upload(/*[[${imgUrls}]]*/);

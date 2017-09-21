@@ -74,8 +74,11 @@ $(".left-sidebar").css({
 
 //初始化菜单的展开状态
 $("#sidebar-nav .sidebar-nav-link a").each(function (idx, ele) {
-    if ($(ele).attr("href") == location.href) {
+    var host = location.protocol+"//"+location.host;
+    var href = location.href.replace(host, '');
+    if ($(ele).attr("href") == href) {
         $(ele).addClass("sub-active");
+        $(ele).closest(".sidebar-nav").prev().trigger("click");
         return;
     }
 })

@@ -133,7 +133,7 @@
                     </a>
                 </shiro:hasAnyPermissions>
                 
-                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                <ul class="sidebar-nav sidebar-nav-sub">
                     <th:block th:each="subMenu : ${menu.subMenus}">
                         <shiro:hasPermission name="${subMenu.permission}">
                             <li class="sidebar-nav-link">

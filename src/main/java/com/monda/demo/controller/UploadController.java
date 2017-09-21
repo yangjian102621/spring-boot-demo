@@ -23,13 +23,13 @@ public class UploadController {
 	private QiNiuUploadUtils qiNiuUploadUtils;
 
 	/**
-	 * 七牛云服务器上传
+	 * 文件上传
 	 * @param file
 	 * @return
 	 */
-	@PostMapping(value = "/qiniu")
+	@PostMapping(value = "/putFile")
 	@ResponseBody
-	public ResultVo qiNiu(MultipartFile file) {
+	public ResultVo putFile(MultipartFile file) {
 
 		ResultVo resultVo = ResultVo.success();
 		ResultVo uploadFile = qiNiuUploadUtils.uploadFile(file);
@@ -40,6 +40,20 @@ public class UploadController {
 			resultVo.setCode(ResultEnum.FAIL.getCode());
 			resultVo.setMessage(uploadFile.getMessage());
 		}
+		return resultVo;
+	}
+
+	/**
+	 * 文件列表管理
+	 * @param file
+	 * @return
+	 */
+	@PostMapping(value = "/list")
+	@ResponseBody
+	public ResultVo list(MultipartFile file) {
+
+		ResultVo resultVo = ResultVo.success();
+
 		return resultVo;
 	}
 

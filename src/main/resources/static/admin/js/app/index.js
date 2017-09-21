@@ -33,7 +33,7 @@ define(function(require, exports) {
 		var loader;
 
 		$("#upload-btn").JUpload({
-			url : "/upload/qiniu",
+			url : "/upload/putFile",
 			src : "file",
 			maxFileNum : 5,
 			extAllow : "jpg|png|gif|jpeg",
@@ -62,6 +62,43 @@ define(function(require, exports) {
 		});
 
 		$(".img-wrapper img").jpreview();
+	}
+
+	/**
+	 * 编辑器
+	 */
+	exports.editor = function () {
+
+		KindEditor.ready(function(K) {
+			K.create('textarea[name="content"]', {
+
+				uploadJson : '/upload/putFile',
+				filePostName : 'file',
+				fileManagerJson : 'php/qiniu/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+				},
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000, offset:60});
+				}
+			});
+
+		});
+
 	}
 
     var vm = new Vue({
