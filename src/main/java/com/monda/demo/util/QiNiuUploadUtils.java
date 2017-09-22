@@ -3,11 +3,15 @@ package com.monda.demo.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monda.demo.enums.ResultEnum;
 import com.monda.demo.vo.ResultVo;
+import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.storage.model.FileInfo;
+import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 七牛云上传工具
@@ -51,13 +54,39 @@ public class QiNiuUploadUtils {
 	private String allowImgExts;
 
 	/**
+	 * 空间配置
+     */
+	private Configuration cfg;
+
+	/**
+	 * 认证对象
+     */
+	private Auth auth;
+
+	private IdUtil idUtil;
+
+	/**
+	 * 初始化token
+     */
+	public void initToken() {
+
+		// 这里默认是华南区,其他区的根据情况修改 Zone 的值
+		cfg = new Configuration(Zone.zone2());
+		auth = Auth.create(accessKey, secretKey);
+		idUtil = IdUtil.getInstance();
+
+	}
+
+	/**
 	 * 文件上传主程序
+	 * @param prefix
 	 * @param upFile
 	 * @return
      */
-	public ResultVo uploadFile(MultipartFile upFile) {
+	public ResultVo uploadFile(String prefix, MultipartFile upFile) {
 
-		Configuration cfg = new Configuration(Zone.zone2());
+		initToken();
+
 		UploadManager uploadManager = new UploadManager(cfg);
 		ResultVo resultVo = ResultVo.success();
 
@@ -71,19 +100,54 @@ public class QiNiuUploadUtils {
 			return resultVo;
 		}
 
-		Auth auth = Auth.create(accessKey, secretKey);
 		String upToken = auth.uploadToken(bucket);
+		String extension = this.getFileExt(upFile.getOriginalFilename());
+		String filename = prefix+"-"+idUtil.getNewId()+"."+extension;
 		try {
-			Response response = uploadManager.put(upFile.getBytes(), null, upToken);
+			Response response = uploadManager.put(upFile.getBytes(), filename, upToken);
 			//解析上传成功的结果
 			DefaultPutRet putRet = OBJECT_MAPPER.readValue(response.bodyString(), DefaultPutRet.class);
-			resultVo.setItem(domain+"/"+putRet.hash);
+			resultVo.setItem(domain+filename);
 		} catch (Exception e) {
 			resultVo.setCode(ResultEnum.FAIL.getCode());
 			LOGGER.error("{}", e);
 		}
 
 		return resultVo;
+	}
+
+	public ResultVo getFileList(String prefix, String marker, Integer limit) throws QiniuException {
+
+		initToken();
+
+		BucketManager bucketManager = new BucketManager(auth, cfg);
+		String delimiter = "";
+		FileListing fileListing = bucketManager.listFiles(bucket, prefix, marker, limit, delimiter);
+
+		List<Map> list = new ArrayList<>();
+		ResultVo resultVo = ResultVo.success();
+		if (fileListing.items.length > 0) {
+			for (FileInfo item : fileListing.items) {
+				Map<String, String> map = new HashMap<>();
+				map.put("thumbURL", domain+item.key);
+				map.put("oriURL", domain+item.key);
+				map.put("filesize", domain+item.fsize);
+
+				list.add(map);
+			}
+			resultVo.setItems(list);
+			if (null != fileListing.marker) {
+				resultVo.setItem(fileListing.marker);
+			} else {
+				resultVo.setItem("no_records");
+			}
+		} else {
+			resultVo.setCode(ResultEnum.FAIL.getCode());
+			resultVo.setMessage("没有获取到任何文件");
+		}
+
+		return resultVo;
+
 	}
 
 	/**

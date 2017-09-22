@@ -74,7 +74,7 @@ define(function(require, exports) {
 
 				uploadJson : '/upload/putFile',
 				filePostName : 'file',
-				fileManagerJson : 'php/qiniu/file_manager_json.php',
+				fileManagerJson : '/upload/list',
 				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
 				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
@@ -104,7 +104,7 @@ define(function(require, exports) {
     var vm = new Vue({
         el: '#example',
         data: {
-            username : "数据双向绑定"
+            message : "数据双向绑定"
         }
     })
 

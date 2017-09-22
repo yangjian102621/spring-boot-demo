@@ -39,7 +39,7 @@ qiniu:
   # 选择存储器
   bucket: test
   # 外链默认域名
-  domain: http://ovsekfapp.bkt.clouddn.com
+  domain: http://ovsekfapp.bkt.clouddn.com/
   # 上传最大尺寸 2M
   maxFileSize: 2
   #允许上传的图片后缀

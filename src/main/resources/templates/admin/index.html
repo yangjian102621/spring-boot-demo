@@ -127,10 +127,10 @@
                                         </div>
                                     </div>
     
-                                    <div class="am-form-group">
-                                        <label>文本域：</label>
-                                        <div class="tpl-switch">
-                                            <textarea rows="5"></textarea>
+                                    <div class="am-form-group" id="example">
+                                        <label>Vue数据双向绑定： {{ message }}</label>
+                                        <div>
+                                            <textarea rows="5" v-model="message"></textarea>
                                         </div>
                                     </div>
     
@@ -147,8 +147,8 @@
                                     </div>
     
                                     <div class="am-form-group">
-                                        <label>文本域：</label>
-                                        <div class="tpl-switch">
+                                        <label>编辑器：</label>
+                                        <div>
                                             <textarea rows="5" name="content"></textarea>
                                         </div>
                                     </div>
@@ -178,6 +178,7 @@
 <script th:inline="javascript">
     seajs.use("index", function (exports) {
         exports.upload(/*[[${imgUrls}]]*/);
+        exports.editor();
     });
     
 </script>
