@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +54,7 @@ public class UploadController {
 
 	/**
 	 * 文件列表管理
-	 * @param file
+	 * @param request
 	 * @return
 	 */
 	@GetMapping(value = "/list")
@@ -64,10 +63,25 @@ public class UploadController {
 
 		String prefix = StringUtils.trim(request.getParameter("fileType"));
 		String marker = StringUtils.trim(request.getParameter("marker"));
-		if (marker.equals("no_records")) {
+		if (null == prefix
+				|| null == marker
+				|| marker.equals("no_records")) {
 			return ResultVo.fail();
 		}
 		return qiNiuUploadUtils.getFileList(prefix, marker, 15);
+
+	}
+
+	/**
+	 * 文件搜索
+	 * @param request
+	 * @return
+	 */
+	@GetMapping(value = "/search")
+	@ResponseBody
+	public ResultVo search(HttpServletRequest request) {
+
+		return null;
 
 	}
 
