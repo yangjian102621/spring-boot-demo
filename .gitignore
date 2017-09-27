@@ -16,4 +16,5 @@ target/
 mvnw.cmd
 mvnw
 .mvnw
-.mvn
+.mvn 
+src/main/resources/static/tmp/
