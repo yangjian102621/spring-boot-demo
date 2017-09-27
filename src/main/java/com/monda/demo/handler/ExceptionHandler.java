@@ -24,12 +24,11 @@ public class ExceptionHandler {
     @ResponseBody
     public ResultVo handle(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
 
-        //logger.error("======> {}", e);
+        logger.error("======> {}", e);
         if (e instanceof AppException) {
             AppException exception = (AppException) e;
             return ResultVo.instance(exception.getCode(), exception.getMessage());
         }
-        System.out.println(response.getStatus());
         if (e instanceof UnauthorizedException) {
             //ajax 请求
             if (request.getHeader("X-Requested-With") != null

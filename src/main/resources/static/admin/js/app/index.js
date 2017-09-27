@@ -75,8 +75,8 @@ define(function(require, exports) {
 				uploadJson : '/upload/putFile',
 				filePostName : 'file',
 				fileManagerJson : '/upload/list',
-				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
+				imageSearchJson : '/upload/search', //图片搜索url
+				imageGrapJson : '/upload/grap', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,

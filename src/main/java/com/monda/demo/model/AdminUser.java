@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "admin_user")
 public class AdminUser extends BaseEntity<Integer> implements Serializable {
 
-    static ObjectMapper objectMapper = new ObjectMapper(); //json处理对象
+    static final ObjectMapper OBJECT_MAPPER = new ObjectMapper(); //json处理对象
 
     /**
      * 用户名，使用电话号码注册
@@ -218,7 +218,7 @@ public class AdminUser extends BaseEntity<Integer> implements Serializable {
      */
     public List<String> getRoleIdsList() {
         try {
-            return objectMapper.readValue(this.getRoleIds(), List.class);
+            return OBJECT_MAPPER.readValue(this.getRoleIds(), List.class);
         } catch (Exception e) {
             return new ArrayList<>();
         }
@@ -229,7 +229,7 @@ public class AdminUser extends BaseEntity<Integer> implements Serializable {
      * @throws JsonProcessingException
      */
     public void setRoleIdsList(List<String> roleIds) throws JsonProcessingException {
-        this.roleIds = objectMapper.writeValueAsString(roleIds);
+        this.roleIds = OBJECT_MAPPER.writeValueAsString(roleIds);
     }
 
     public void setRoleIds(String roleIds) {

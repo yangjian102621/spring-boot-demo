@@ -1,6 +1,6 @@
 package com.monda.demo.util;
 
-import org.apache.commons.lang.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -13,7 +13,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,8 @@ import java.util.Map;
  * Created by yangjian on 17-9-26.
  */
 public class HttpUtils {
+
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	/**
 	 * 发送 post 请求
@@ -65,7 +70,6 @@ public class HttpUtils {
 	 * @return
 	 */
 	public static String get(String url, Map params) throws IOException {
-
 		String result = null;
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet(httpBuildQuery(url, params));
@@ -79,6 +83,34 @@ public class HttpUtils {
 		httpClient.close();
 
 		return result;
+	}
+
+	/**
+	 * GET 方式请求 json API， 并返回 Map 对象
+	 * @param url
+	 * @param params
+	 * @return
+	 */
+	public static Map getJson(String url, Map params) throws IOException {
+		String html = get(url, params);
+		if (null != html) {
+			return OBJECT_MAPPER.readValue(html, Map.class);
+		}
+		return null;
+	}
+
+	/**
+	 * POST 方式请求 json API， 并返回 Map 对象
+	 * @param url
+	 * @param params
+	 * @return
+	 */
+	public static Map postJson(String url, Map params) throws IOException {
+		String html = post(url, params);
+		if (null != html) {
+			return OBJECT_MAPPER.readValue(html, Map.class);
+		}
+		return null;
 	}
 
 	/**
@@ -103,6 +135,47 @@ public class HttpUtils {
 			list.add(k+"="+v);
 		});
 		return newUrl + StringUtils.join(list, "&");
+	}
+
+	/**
+	 * 网络文件下载
+	 * @param url
+	 * @param filePath
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean download(String url, String filePath) throws IOException {
+
+		//如果原有文件存在，则先删除
+		File file = new File(filePath);
+		if (file.exists()) {
+			file.delete();
+		}
+		file.createNewFile();
+		FileOutputStream os = new FileOutputStream(filePath);
+
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		HttpGet httpGet = new HttpGet(url);
+		CloseableHttpResponse response = httpClient.execute(httpGet);
+		HttpEntity entity = response.getEntity();
+		InputStream is = entity.getContent();
+		//循环读取网络数据，写入本地文件
+		while (true) {
+			byte[] bytes = new byte[1024*1000];
+			int len = is.read(bytes);
+			if (len >= 0){
+				os.write(bytes, 0, len);
+				os.flush();
+			}
+			else break;
+		}
+		is.close();
+		os.close();
+
+		response.close();
+		httpClient.close();
+
+		return true;
 	}
 
 }

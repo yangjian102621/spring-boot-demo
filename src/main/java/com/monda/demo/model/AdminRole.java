@@ -14,7 +14,7 @@ import java.util.Map;
 public class AdminRole extends BaseEntity<Integer> implements Serializable {
 
     // json 处理工具
-    static ObjectMapper objectMapper = new ObjectMapper();
+    static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
      * 角色名称
@@ -141,7 +141,7 @@ public class AdminRole extends BaseEntity<Integer> implements Serializable {
      */
     public Map<String, Object> getPermissionMap() {
         try {
-            return objectMapper.readValue(this.permissions, Map.class);
+            return OBJECT_MAPPER.readValue(this.permissions, Map.class);
         } catch (Exception e) {
             return new HashedMap();
         }
@@ -158,7 +158,7 @@ public class AdminRole extends BaseEntity<Integer> implements Serializable {
         for (String key : permissions) {
             map.put(key, 1);
         }
-        this.permissions = objectMapper.writeValueAsString(map);
+        this.permissions = OBJECT_MAPPER.writeValueAsString(map);
     }
 
     /**

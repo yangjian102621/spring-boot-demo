@@ -1,6 +1,6 @@
 package com.monda.demo;
 
-import com.monda.demo.util.QiNiuUploadUtils;
+import com.monda.demo.util.qiniu.UploadUtils;
 import com.qiniu.common.QiniuException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class SpringBootDemoApplicationTests {
 
 
 	@Autowired
-	private QiNiuUploadUtils qiNiuUploadUtils;
+	private UploadUtils uploadUtils;
 
 
 	@Test
@@ -39,7 +39,7 @@ public class SpringBootDemoApplicationTests {
 	@Test
 	public void fileList() throws QiniuException {
 
-		qiNiuUploadUtils.getFileList("", "", 15);
+		uploadUtils.getFileList("", "", 15);
 	}
 
 

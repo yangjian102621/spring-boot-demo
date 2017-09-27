@@ -41,8 +41,8 @@ public class IndexController {
 	public String adminIndex(HttpServletRequest request, ModelMap modelMap) {
 		modelMap.put("title", "数据添加 Demo 页面");
 		List<String> imgUrls = new ArrayList<>();
-		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FvRZZBU4dE1e1ek_cOfpt3wUFgrw");
-		imgUrls.add("http://ovsekfapp.bkt.clouddn.com/FhVdxPhVdVxCXmtLZRbBf5z2cN3X");
+		imgUrls.add("http://owxozhodg.bkt.clouddn.com/image-a0015ec2d801da0001.jpg");
+		imgUrls.add("http://owxozhodg.bkt.clouddn.com/image-a0015ec2d803ee0001.jpg");
 		modelMap.put("imgUrls", imgUrls);
 		return "admin/index";
 	}

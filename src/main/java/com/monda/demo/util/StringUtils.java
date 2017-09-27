@@ -36,8 +36,8 @@ public class StringUtils {
     }
 
     /**
-     * 生成uuid
-     * @return UUID
+     * 生成随机 UUID，非并发安全
+     * @return
      */
     public static String getUUId() {
         return getMd5Code(UUID.randomUUID().toString());
