@@ -33,14 +33,5 @@ public class SpringBootDemoApplicationTests {
 		System.out.println(list);
 	}
 
-	/**
-	 * 七牛获取文件列表
-     */
-	@Test
-	public void fileList() throws QiniuException {
-
-		uploadUtils.getFileList("", "", 15);
-	}
-
 
 }

@@ -1,5 +1,11 @@
 package com.monda.demo.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  * 文件处理工具
  * Created by yangjian on 17-9-27.
@@ -28,6 +34,31 @@ public class FileUtils {
 		} else {
 			return  filename.substring(pos+1).toLowerCase() ;
 		}
+	}
+
+	/**
+	 * 获取文件大小
+	 * @param filePath
+	 * @return
+     */
+	public static long getFileSize(String filePath) {
+		File file = new File(filePath);
+		return file.length();
+	}
+
+	/**
+	 * 获取网络文件的大小
+	 * @param remoteFileUrl
+	 * @return
+	 * @throws IOException
+     */
+	public static long getRemoteFileSize(String remoteFileUrl) throws IOException {
+		long size;
+		URL url = new URL(remoteFileUrl);
+		URLConnection conn = url.openConnection();
+		size = conn.getContentLength();
+		conn.getInputStream().close();
+		return size;
 	}
 }
 

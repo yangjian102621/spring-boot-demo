@@ -78,7 +78,7 @@ public class UploadController {
 	 */
 	@GetMapping(value = "/list")
 	@ResponseBody
-	public ResultVo list(HttpServletRequest request) throws QiniuException {
+	public ResultVo list(HttpServletRequest request) throws IOException {
 
 		String prefix = StringUtils.trim(request.getParameter("fileType"));
 		String marker = StringUtils.trim(request.getParameter("marker"));
@@ -157,11 +157,11 @@ public class UploadController {
 		if(null != act && act.equals("grapImage")) {
 			//抓取原图并上传到七牛
 			String[] imgs = StringUtils.trim(request.getParameter("urls")).split(",");
+			String fileType = StringUtils.trim(request.getParameter("fileType"));
+
 			ArrayList<Object> list = new ArrayList<>();
 			for (String img : imgs) {
-				String filePath = tmpPath.getAbsolutePath() + "/" + FileUtils.getFilenameFromPath(img);
-				HttpUtils.download(img, filePath); //先下载原图
-				ResultVo upload = uploadUtils.uploadFile("image", filePath); //然后上传到七牛
+				ResultVo upload = uploadUtils.fetch(img, fileType); //然后上传到七牛
 				if (upload.isSuccess()) {
 					list.add(upload.getItem());
 				}

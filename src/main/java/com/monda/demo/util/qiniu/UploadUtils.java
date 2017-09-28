@@ -13,6 +13,7 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.storage.model.FetchRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
@@ -166,6 +167,32 @@ public class UploadUtils {
 	}
 
 	/**
+	 * 抓取网络资源到空间
+	 * @param remoteSrcUrl
+	 * @param prefix
+	 * @return
+	 */
+	public ResultVo fetch(String remoteSrcUrl, String prefix) {
+
+		initToken();
+
+		BucketManager bucketManager = new BucketManager(auth, cfg);
+		ResultVo resultVo = ResultVo.success();
+
+		//抓取网络资源到空间
+		String extension = FileUtils.getFileExtesion(remoteSrcUrl);
+		String filename = prefix+"-"+idUtil.getNewId()+"."+extension;
+		try {
+			FetchRet fetchRet = bucketManager.fetch(remoteSrcUrl, bucket, filename);
+			resultVo.setItem(domain+fetchRet.key);
+		} catch (QiniuException e) {
+			resultVo.setCode(ResultEnum.FAIL.getCode());
+			LOGGER.error("{}", e);
+		}
+		return resultVo;
+	}
+
+	/**
 	 * base64 图片上传
 	 * @param prefix
 	 * @param data
@@ -213,7 +240,7 @@ public class UploadUtils {
 	 * @return
 	 * @throws QiniuException
 	 */
-	public ResultVo getFileList(String prefix, String marker, Integer limit) throws QiniuException {
+	public ResultVo getFileList(String prefix, String marker, Integer limit) throws IOException {
 
 		initToken();
 
@@ -226,10 +253,14 @@ public class UploadUtils {
 		if (fileListing.items.length > 0) {
 			for (FileInfo item : fileListing.items) {
 				Map<String, Object> map = new HashMap<>();
-				ImageInfo info = getImageInfo(item.key);
-				if (null != info) {
-					map.put("height", info.getHeight());
-					map.put("width", info.getWidth());
+				if (isImage(item.key)) {
+					ImageInfo info = getImageInfo(item.key);
+					if (null != info) {
+						map.put("height", info.getHeight());
+						map.put("width", info.getWidth());
+					}
+				} else {
+					map.put("filesize", FileUtils.getRemoteFileSize(domain+item.key));
 				}
 				map.put("thumbURL", domain+item.key);
 				map.put("oriURL", domain+item.key);
@@ -295,6 +326,17 @@ public class UploadUtils {
 		} catch (IOException e) {
 			return null;
 		}
+	}
+
+	/**
+	 * 判断某个文件是否为图片
+	 * @param fileName
+	 * @return
+	 */
+	private static boolean isImage(String fileName) {
+
+		String extesion = FileUtils.getFileExtesion(fileName);
+		return "|jpge|jpg|bpm|gif|png".indexOf(extesion) != -1;
 	}
 
 }

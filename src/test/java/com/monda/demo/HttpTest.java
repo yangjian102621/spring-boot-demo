@@ -1,8 +1,14 @@
 package com.monda.demo;
 
 import com.monda.demo.util.HttpUtils;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,4 +58,5 @@ public class HttpTest {
         String url = "http://img2.duitang.com/uploads/item/201304/29/20130429065533_tWVfN.jpeg";
         System.out.println(HttpUtils.download(url, "/javaweb/123.jpeg"));
     }
+
 }
