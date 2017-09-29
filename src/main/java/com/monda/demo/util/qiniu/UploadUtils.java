@@ -63,6 +63,8 @@ public class UploadUtils {
 	@Value("${qiniu.allowImgExts}")
 	private String allowImgExts;
 
+	@Value("${qiniu.allowFileExts}")
+	private String allowFileExts;
 	/**
 	 * 空间配置
      */
@@ -304,7 +306,12 @@ public class UploadUtils {
 	private void checkFileExtension(MultipartFile multipartFile, ResultVo resultVo) {
 
 		String extension = FileUtils.getFileExtesion(multipartFile.getOriginalFilename());
-		List<String> extList = Arrays.asList(allowImgExts.split("\\|"));
+		List<String> extList;
+		if (isImage(multipartFile.getOriginalFilename())) {
+			extList = Arrays.asList(allowImgExts.split("\\|"));
+		} else {
+			extList = Arrays.asList(allowFileExts.split("\\|"));
+		}
 		if (!extList.contains(extension)) {
 			resultVo.setCode(ResultEnum.FAIL.getCode());
 			resultVo.setMessage("非法的文件后缀");

@@ -50,6 +50,8 @@ qiniu:
   maxFileSize: 2
   #允许上传的图片后缀
   allowImgExts: jpg|jpeg|png|gif
+  #允许上传的文件后缀
+  allowFileExts: rar|zip|tgz|tar.gz|doc|docx|xls|xlsx|jpg|jpeg|png|gif
 
 
 
