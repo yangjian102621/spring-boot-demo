@@ -1,0 +1,1 @@
+docker run -it -v /Users/yangjian/workspace/code/php:/php -p 12580:22 -p 9009:9000 -p 6800:6800 -p 11211:11211 -p 3307:3306 -p 80:80 --name php php:ubuntu /bin/bash

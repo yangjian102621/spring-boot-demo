@@ -80,6 +80,7 @@ define(function(require, exports) {
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
+				themeType : "blue", //主题
 				afterCreate : function() {
 					var self = this;
 					K.ctrl(document, 13, function() {
